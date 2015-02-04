@@ -45,9 +45,9 @@
 	function calendar(el, year){
 		el.innerHTML = '<h2>' + year + '</h2>';
 		for (var month=0;month<12;month++){
-			var daysInMonth = new Date(year, month, 0).getDate();
+			var daysInMonth = new Date(year, month+1, 0).getDate();
 			var days = [];
-			for (var day=1;day<(daysInMonth+1);day++){
+			for (var day=1;day<=daysInMonth;day++){
 				var dayNum = new Date(year, month, day).getDay();
 				days.push((dayNum === 0 || dayNum === 6) ? '<b>'+day+'</b>' : day);
 			}
