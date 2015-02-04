@@ -3,30 +3,48 @@
 <style>
 	body {
 		font-family: sans-serif;
+		color: #aaa;
+		white-space: nowrap;
+		letter-spacing: 0.2em;
+		line-height: 2em;
 	}
+	h2 {
+		letter-spacing: 0.55em;
+	}
+	h1, h2, b {
+		font-weight: normal;
+	}
+	.help {
+		background: #eee;
+		padding: 20px;
+	}
+	#calendar b{
+		color: #000;
+	}
+	
 	@media print {
-		.help, .print {
+		.help {
 			display:none;
 		}
 	}
 </style>
 <body>
+	<div class="help">Change the title &amp; year by clicking on them, then <a href="javascript:window.print()">print</a>.<br> Every day you do the thing, cross off that day.</div>
 	<h1>dontbreakthechain</h1>
 	<div id="calendar"></div>
-	<div class="help"><hr>Change the title &amp; year by clicking on them, then click print.<br> Every day you do the thing, cross off that day.</div>
-	<a class="print" href="javascript:window.print()">print</a>
 </body>
 <script>
 (function(){
 	function calendar(el, year){
 		el.innerHTML = '<h2>' + year + '</h2>';
-		for (var month=1;month<13;month++){
+		for (var month=0;month<12;month++){
 			var daysInMonth = new Date(year, month, 0).getDate();
 			var days = [];
 			for (var day=1;day<(daysInMonth+1);day++){
-				days.push(day);
+				var dayNum = new Date(year, month, day).getDay();
+				days.push((dayNum === 0 || dayNum === 6) ? '<b>'+day+'</b>' : day);
 			}
-			el.innerHTML += '<p>'+days.join(' ')+'</p>';
+			el.innerHTML += '<p>'+days.join(' &nbsp;')+'</p>';
 		}
 		var dYear = document.getElementsByTagName("h2")[0];
 		dYear.contentEditable = true;
