@@ -1,0 +1,42 @@
+<!doctype html>
+<title>dontbreakthechain</title>
+<style>
+	body {
+		font-family: sans-serif;
+	}
+	@media print {
+		.help, .print {
+			display:none;
+		}
+	}
+</style>
+<body>
+	<h1>dontbreakthechain</h1>
+	<div id="calendar"></div>
+	<div class="help"><hr>Change the title &amp; year by clicking on them, then click print.<br> Every day you do the thing, cross off that day.</div>
+	<a class="print" href="javascript:window.print()">print</a>
+</body>
+<script>
+(function(){
+	function calendar(el, year){
+		el.innerHTML = '<h2>' + year + '</h2>';
+		for (var month=1;month<13;month++){
+			var daysInMonth = new Date(year, month, 0).getDate();
+			var days = [];
+			for (var day=1;day<(daysInMonth+1);day++){
+				days.push(day);
+			}
+			el.innerHTML += '<p>'+days.join(' ')+'</p>';
+		}
+		var dYear = document.getElementsByTagName("h2")[0];
+		dYear.contentEditable = true;
+		dYear.onblur = function(){
+			calendar(dCal, dYear.innerHTML);
+		};
+	}
+	var dCal = document.getElementById('calendar');
+	var dTitle = document.getElementsByTagName("h1")[0];
+	calendar(dCal, (new Date()).getFullYear());
+	dTitle.contentEditable = true;
+})();
+</script>
