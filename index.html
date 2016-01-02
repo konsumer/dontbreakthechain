@@ -7,6 +7,7 @@
 		white-space: nowrap;
 		letter-spacing: 0.2em;
 		line-height: 2em;
+		font-size: 13px;
 	}
 	h2 {
 		letter-spacing: 0.55em;
@@ -29,6 +30,7 @@
 	}
 	
 	@media print {
+		@page {size: landscape}
 		.help, .fork {
 			display:none;
 		}
@@ -41,27 +43,25 @@
 	<div id="calendar"></div>
 </body>
 <script>
-(function(){
-	function calendar(el, year){
-		el.innerHTML = '<h2>' + year + '</h2>';
-		for (var month=0;month<12;month++){
-			var daysInMonth = new Date(year, month+1, 0).getDate();
-			var days = [];
-			for (var day=1;day<=daysInMonth;day++){
-				var dayNum = new Date(year, month, day).getDay();
-				days.push((dayNum === 0 || dayNum === 6) ? '<b>'+day+'</b>' : day);
-			}
-			el.innerHTML += '<p>'+days.join(' &nbsp;')+'</p>';
-		}
-		var dYear = document.getElementsByTagName("h2")[0];
-		dYear.contentEditable = true;
-		dYear.onblur = function(){
-			calendar(dCal, dYear.innerHTML);
-		};
-	}
-	var dCal = document.getElementById('calendar');
-	var dTitle = document.getElementsByTagName("h1")[0];
-	calendar(dCal, (new Date()).getFullYear());
-	dTitle.contentEditable = true;
-})();
+;(function () {
+  function calendar (el, year) {
+    el.innerHTML = '<h2>' + year + '</h2>'
+    for (var month = 0;month < 12;month++) {
+      var daysInMonth = new Date(year, month + 1, 0).getDate()
+      var days = []
+      for (var day = 1;day <= daysInMonth;day++) {
+        var dayNum = new Date(year, month, day).getDay()
+        days.push((dayNum === 0 || dayNum === 6) ? '<b>' + day + '</b>' : day)
+      }
+      el.innerHTML += '<p>' + days.join(' &nbsp;') + '</p>'
+    }
+    var dYear = document.getElementsByTagName('h2')[0]
+    dYear.contentEditable = true
+    dYear.onblur = function () {
+      calendar(el, dYear.innerHTML)
+    }
+  }
+  calendar(document.getElementById('calendar'), (new Date()).getFullYear())
+  document.getElementsByTagName('h1')[0].contentEditable = true
+})()
 </script>
